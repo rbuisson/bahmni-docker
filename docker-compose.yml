@@ -68,6 +68,7 @@ services:
       - /usr/local/tomcat/.OpenMRS/owa/
       - "${OPENMRS_MODULES_PATH}:/usr/local/tomcat/.OpenMRS/modules/"
       - "${OPENMRS_CONFIG_PATH}:/usr/local/tomcat/.OpenMRS/configuration/"
+      - /usr/local/tomcat/.OpenMRS/configuration_checksums/
 
   openmrs-mysql:
     command: "mysqld --character-set-server=utf8 --collation-server=utf8_general_ci"
