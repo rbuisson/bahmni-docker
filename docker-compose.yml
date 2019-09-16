@@ -135,7 +135,8 @@ services:
 version: "3.7"
 volumes:
   openmrs-tomcat-data: ~
-  openmrs-mysql-data: ~
+  openmrs-mysql-data:
+    external: true
   odoo-postgresql-data:
     external: true
 networks:
