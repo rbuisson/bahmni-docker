@@ -149,7 +149,32 @@ services:
       bahmni:
         aliases:
           - metabase
-
+  bahmni-reports:
+    build:
+      context: bahmni-reports/
+      args:
+        BAHMNI_REPORTS_URL: "${BAHMNI_REPORTS_URL:-https://nexus.mekomsolutions.net/repository/maven-snapshots/org/bahmni/reports/0.92-SNAPSHOT/reports-0.92-20200206.093821-1.war}"
+    environment:
+      IMPLEMENTATION_NAME: default
+      OPENMRS_DB_SERVER: openmrs-mysql
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-Admin123}"
+      OPENMRS_PASSWORD: "${MYSQL_PASSWORD:-Admin123}"
+      REPORTS_DB_SERVER: openmrs-mysql
+      REPORTS_DB_USERNAME: reports-user
+      CONTEXT_PATH: /bahmnireports
+      REPORTS_DB_PASSWORD: "${REPORTS_PASSWORD:-Admin123}"
+      OPENMRS_SERVICE_PASSWORD: "${OPENMRS_SERVICE_PASSWORD:-test}"
+    depends_on:
+      - postgres-mart
+      - openmrs-mysql
+    networks:
+      bahmni:
+        aliases:
+          - bahmni-reports
+    volumes:
+        - "${BAHMNI_CONFIG_PATH:-bahmni_config}:/var/www/bahmni_config"
+        - "bahmni-reports-data:/reports"
 version: "3.7"
 volumes:
   openmrs-tomcat-data: ~
@@ -159,6 +184,7 @@ volumes:
   bahmni_config: ~
   mart-psql-data: ~
   bahmni_home: ~
+  bahmni-reports-data: ~
 networks:
   bahmni:
   
