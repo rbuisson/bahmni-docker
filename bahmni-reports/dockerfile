@@ -1,7 +1,7 @@
 FROM tomcat:jdk8
 ARG BAHMNI_REPORTS_URL=https://nexus.mekomsolutions.net/repository/maven-snapshots/org/bahmni/reports/0.92-SNAPSHOT/reports-0.92-20200206.093821-1.war
 RUN apt-get update && \
-    apt-get install wget mysql-client gettext-base -y && \
+    apt-get install wget mariadb-client gettext-base -y && \
     mkdir -p /var/www/bahmni_config/ /root/.bahmni-reports/ && \
     wget -O /opt/mysql-connector-java-5.1.26.jar https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.26/mysql-connector-java-5.1.26.jar && \
     wget -O /opt/liquibase-core-2.0.5.jar   https://repo1.maven.org/maven2/org/liquibase/liquibase-core/2.0.5/liquibase-core-2.0.5.jar && \
@@ -11,4 +11,5 @@ ADD scripts/ /etc/scripts/
 ADD conf/ /opt/conf/
 VOLUME /reports
 RUN chmod +x /etc/scripts/*
+
 CMD ["/bin/sh", "/etc/scripts/setup.sh"]
